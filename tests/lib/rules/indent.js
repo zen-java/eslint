@@ -3041,9 +3041,265 @@ ruleTester.run("indent", rule, {
 
                 ; [1, 2, 3].map(baz)
             `
-        }
-    ],
+        },
 
+        // https://github.com/eslint/eslint/issues/8425
+        {
+            code: '<Foo a="b" c="d"/>;',
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <Foo
+                    a="b"
+                    c="d"
+                />;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: 'var foo = <Bar a="b" c="d"/>;',
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = <Bar
+                    a="b"
+                    c="d"
+                />;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+         {
+            code: unIndent`
+                var foo = (<Bar
+                    a="b"
+                    c="d"
+                />);
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = (
+                    <Bar
+                        a="b"
+                        c="d"
+                    />
+                );
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <
+                    Foo
+                    a="b"
+                    c="d"
+                />;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <Foo
+                    a="b"
+                    c="d"/>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <
+                    Foo
+                    a="b"
+                    c="d"/>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: '<a href="foo">bar</a>;',
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <a href="foo">
+                    bar
+                </a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <a
+                    href="foo"
+                >
+                    bar
+                </a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <a
+                    href="foo">
+                    bar
+                </a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <
+                    a
+                    href="foo">
+                    bar
+                </a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <a
+                    href="foo">
+                    bar
+                </
+                    a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                <a
+                    href="foo">
+                    bar
+                </a
+                >;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+
+
+
+        {
+            code: unIndent`
+                var foo = <a href="bar">
+                    baz
+                </a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = <a
+                    href="bar"
+                >
+                    baz
+                </a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = <a
+                    href="bar">
+                    baz
+                </a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = <
+                    a
+                    href="bar">
+                    baz
+                </a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = <a
+                    href="bar">
+                    baz
+                 </
+                    a>;
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = <a
+                    href="bar">
+                    baz
+                </a
+                >
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = (<a
+                    href="bar">
+                    baz
+                </a>);
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = (
+                    <a href="bar">baz</a>
+                );
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = (
+                    <a href="bar">
+                        baz
+                    </a>
+                );
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                var foo = (
+                    <a
+                        href="bar">
+                        baz
+                    </a>
+                );
+            `,
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: 'var foo = <a href="bar">baz</a>;',
+            parserOptions: { ecmaFeatures: { jsx: true } }
+        },
+        {
+            code: unIndent`
+                function foo() {
+                    return (
+                        <a>
+                            {
+                                b.forEach(() => {
+                                    // comment
+                                    a = c
+                                        .d()
+                                        .e();
+                                })
+                            }
+                        </a>
+                    );
+                }
+            `,
+            parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } }
+        },
+    ],
 
     invalid: [
         {
