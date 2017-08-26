@@ -59,10 +59,11 @@ const NODE = "node ", // intentional extra space
 
     // Utilities - intentional extra space at the end of each string
     MOCHA = `${NODE_MODULES}mocha/bin/_mocha `,
-    ESLINT = `${NODE} bin/eslint.js --rulesdir lib/internal-rules/ `,
+    ESLINT = `${NODE} bin/eslint.js `,
 
     // Files
     MAKEFILE = "./Makefile.js",
+    PLUGIN_FILE = "./.eslintplugin.js",
     JS_FILES = "\"lib/**/*.js\" \"conf/**/*.js\" \"bin/**/*.js\" \"tools/**/*.js\"",
     JSON_FILES = find("conf/").filter(fileType("json")),
     MARKDOWN_FILES_ARRAY = find("docs/").concat(ls(".")).filter(fileType("md")),
@@ -510,6 +511,12 @@ target.lint = function() {
 
     echo("Validating Makefile.js");
     lastReturn = exec(`${ESLINT} ${MAKEFILE}`);
+    if (lastReturn.code !== 0) {
+        errors++;
+    }
+
+    echo("Validating .eslintplugin.js");
+    lastReturn = exec(`${ESLINT} ${PLUGIN_FILE}`);
     if (lastReturn.code !== 0) {
         errors++;
     }
